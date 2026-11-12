@@ -1,0 +1,538 @@
+/* ==========================================================================
+   AstroLearn // Apple-Inspired Science Onboarding & Topic Hub
+   Design: Deep Obsidian, Crisp Hairlines, SF Pro Typography, Smooth Micro-Springs
+   ========================================================================== */
+
+:root {
+  /* Apple-inspired space obsidian palette */
+  --bg-deep: #05070b;
+  --bg-surface: #0e121a;
+  --bg-card: rgba(255, 255, 255, 0.035);
+  --bg-card-hover: rgba(255, 255, 255, 0.07);
+  --bg-card-active: rgba(41, 151, 255, 0.1);
+
+  /* Hairline Borders */
+  --border-subtle: rgba(255, 255, 255, 0.08);
+  --border-hover: rgba(255, 255, 255, 0.18);
+  --border-active: #2997ff;
+
+  /* Primary Apple Accents */
+  --accent-primary: #0071e3;
+  --accent-primary-hover: #0077ed;
+  --accent-primary-text: #ffffff;
+
+  --accent-link: #2997ff;
+  --accent-badge-bg: rgba(41, 151, 255, 0.12);
+  --accent-badge-border: rgba(41, 151, 255, 0.28);
+  --accent-badge-text: #64d2ff;
+
+  /* Topic Squircles */
+  --accent-topic-trig: #2997ff;     /* Precision Apple Blue */
+  --accent-topic-calc: #30d158;     /* Trajectory Radar Green */
+  --accent-topic-rel: #bf5af2;      /* Spacetime Violet */
+
+  /* Editorial Typography */
+  --text-main: #f5f5f7;
+  --text-secondary: #a1a1a6;
+  --text-muted: #6e6e73;
+
+  /* Easing curves */
+  --ease-spring: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-apple: cubic-bezier(0.25, 1, 0.5, 1);
+  --font-sans: -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  --font-mono: "SF Mono", "Fira Code", Menlo, Monaco, Consolas, monospace;
+}
+
+/* --------------------------------------------------------------------------
+   Global Reset & Surfaces
+   -------------------------------------------------------------------------- */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  font-family: var(--font-sans);
+  background-color: var(--bg-deep);
+  color: var(--text-main);
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 32px 20px;
+  overflow-x: hidden;
+  position: relative;
+  text-rendering: optimizeLegibility;
+}
+
+/* Atmospheric Particle Canvas */
+#space-canvas {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 0;
+  pointer-events: none;
+  opacity: 0.3;
+}
+
+/* Main Flow Container */
+.flow-container {
+  position: relative;
+  z-index: 1;
+  max-width: 640px;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* Apple-Style Minimal Progress Capsule */
+.step-progress-bar {
+  width: 100%;
+  max-width: 220px;
+  height: 3px;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 999px;
+  margin-bottom: 28px;
+  overflow: hidden;
+  display: flex;
+}
+
+.step-progress-fill {
+  height: 100%;
+  width: 25%;
+  background: var(--accent-primary);
+  border-radius: 999px;
+  transition: width 0.4s var(--ease-spring);
+}
+
+/* Step Card Container */
+.step-card {
+  display: none;
+  width: 100%;
+  background: var(--bg-surface);
+  border: 1px solid var(--border-subtle);
+  border-radius: 20px;
+  padding: 40px;
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(20px);
+}
+
+.step-card.active {
+  display: flex;
+  flex-direction: column;
+  animation: step-fade-in 0.35s var(--ease-spring) forwards;
+}
+
+@keyframes step-fade-in {
+  0% {
+    opacity: 0;
+    transform: translateY(14px) scale(0.99);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+/* Step 0: Intro Video Experience */
+.intro-video-wrapper {
+  position: relative;
+  width: 100%;
+  border-radius: 14px;
+  overflow: hidden;
+  background: #000;
+  border: 1px solid var(--border-subtle);
+  aspect-ratio: 16 / 9;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+#introVideo {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.intro-overlay {
+  position: absolute;
+  bottom: 64px;
+  left: 20px;
+  right: 20px;
+  background: rgba(10, 14, 22, 0.78);
+  backdrop-filter: blur(16px);
+  border: 1px solid var(--border-subtle);
+  border-radius: 12px;
+  padding: 14px 18px;
+  font-size: 0.94rem;
+  line-height: 1.45;
+  color: var(--text-main);
+  text-align: center;
+  letter-spacing: -0.01em;
+}
+
+.skip-intro,
+.continue-intro {
+  position: absolute;
+  bottom: 18px;
+  background: rgba(255, 255, 255, 0.12);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  color: #ffffff;
+  font-size: 0.82rem;
+  font-weight: 600;
+  padding: 8px 18px;
+  border-radius: 980px;
+  cursor: pointer;
+  transition: all 0.2s var(--ease-apple);
+  font-family: inherit;
+}
+
+.skip-intro {
+  right: 18px;
+}
+
+.continue-intro {
+  right: 18px;
+  background: var(--accent-primary);
+  border-color: var(--accent-primary);
+}
+
+.skip-intro:hover,
+.continue-intro:hover {
+  background: rgba(255, 255, 255, 0.24);
+  transform: scale(1.02);
+}
+
+.continue-intro:hover {
+  background: var(--accent-primary-hover);
+}
+
+/* Minimalist Step Eyebrow Badge */
+.step-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--accent-badge-text);
+  background: var(--accent-badge-bg);
+  border: 1px solid var(--accent-badge-border);
+  padding: 5px 12px;
+  border-radius: 980px;
+  width: fit-content;
+  margin-bottom: 18px;
+  font-family: var(--font-mono);
+}
+
+.step-title {
+  font-size: 1.9rem;
+  font-weight: 700;
+  letter-spacing: -0.025em;
+  line-height: 1.25;
+  margin-bottom: 10px;
+  color: var(--text-main);
+}
+
+.step-subtitle {
+  font-size: 0.98rem;
+  color: var(--text-secondary);
+  line-height: 1.6;
+  margin-bottom: 30px;
+}
+
+/* --------------------------------------------------------------------------
+   Choice List (Apple Preference Cards)
+   -------------------------------------------------------------------------- */
+.choice-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-bottom: 32px;
+}
+
+.choice-option {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  background: var(--bg-card);
+  border: 1px solid var(--border-subtle);
+  border-radius: 12px;
+  padding: 16px 20px;
+  cursor: pointer;
+  transition: all 0.2s var(--ease-apple);
+  user-select: none;
+}
+
+.choice-option:hover {
+  background: var(--bg-card-hover);
+  border-color: var(--border-hover);
+  transform: translateY(-1px);
+}
+
+.choice-option:active {
+  transform: scale(0.99);
+}
+
+.choice-option.selected {
+  background: var(--bg-card-active);
+  border-color: var(--border-active);
+  box-shadow: inset 0 0 0 1px var(--border-active);
+}
+
+.choice-icon {
+  font-size: 1.35rem;
+  flex-shrink: 0;
+}
+
+.choice-label {
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: var(--text-main);
+  margin-bottom: 3px;
+  letter-spacing: -0.01em;
+}
+
+.choice-desc {
+  font-size: 0.82rem;
+  color: var(--text-secondary);
+  line-height: 1.4;
+}
+
+.choice-radio {
+  margin-left: auto;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  border: 1.5px solid rgba(255, 255, 255, 0.25);
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.18s ease;
+}
+
+.choice-option.selected .choice-radio {
+  border-color: var(--border-active);
+  background: var(--border-active);
+  box-shadow: inset 0 0 0 3px var(--bg-surface);
+}
+
+/* --------------------------------------------------------------------------
+   Actions & Apple Pill Buttons
+   -------------------------------------------------------------------------- */
+.step-actions {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 8px;
+  gap: 12px;
+}
+
+.btn-next {
+  margin-left: auto;
+  background: var(--accent-primary);
+  color: #ffffff;
+  font-size: 0.92rem;
+  font-weight: 600;
+  padding: 11px 24px;
+  border-radius: 980px;
+  border: none;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  transition: all 0.2s var(--ease-apple);
+  font-family: inherit;
+  box-shadow: 0 4px 16px rgba(0, 113, 227, 0.35);
+}
+
+.btn-next:hover {
+  background: var(--accent-primary-hover);
+  transform: translateY(-1px);
+  box-shadow: 0 6px 20px rgba(0, 113, 227, 0.45);
+}
+
+.btn-next:active {
+  transform: translateY(1px) scale(0.98);
+}
+
+.btn-back {
+  background: rgba(255, 255, 255, 0.06);
+  color: var(--text-main);
+  font-size: 0.9rem;
+  font-weight: 500;
+  padding: 10px 20px;
+  border-radius: 980px;
+  border: 1px solid var(--border-subtle);
+  cursor: pointer;
+  transition: all 0.18s ease;
+  font-family: inherit;
+}
+
+.btn-back:hover {
+  background: rgba(255, 255, 255, 0.12);
+  border-color: var(--border-hover);
+}
+
+/* --------------------------------------------------------------------------
+   FINAL LANDING PAGE: 3 SQUIRCLES (APPLE PRODUCT HUB)
+   -------------------------------------------------------------------------- */
+.final-landing-container {
+  display: none;
+  width: 100%;
+  max-width: 920px;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.final-landing-container.active {
+  display: flex;
+  animation: step-fade-in 0.4s var(--ease-spring) forwards;
+}
+
+.landing-header {
+  margin-bottom: 40px;
+}
+
+.landing-header h1 {
+  font-size: clamp(2rem, 4vw, 2.8rem);
+  font-weight: 700;
+  letter-spacing: -0.03em;
+  color: var(--text-main);
+  margin-bottom: 10px;
+}
+
+.landing-header p {
+  font-size: 1.05rem;
+  color: var(--text-secondary);
+  max-width: 520px;
+  margin: 0 auto;
+  line-height: 1.55;
+}
+
+/* The 3 Squircles Grid */
+.squircle-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+  width: 100%;
+}
+
+@media (max-width: 820px) {
+  .squircle-grid {
+    grid-template-columns: 1fr;
+    max-width: 360px;
+  }
+}
+
+/* True Apple Continuous Curvature Squircle */
+.squircle-box {
+  background: var(--bg-surface);
+  border: 1px solid var(--border-subtle);
+  border-radius: 28px;
+  padding: 42px 24px;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  gap: 16px;
+  min-height: 240px;
+  transition: all 0.25s var(--ease-apple);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.08);
+  position: relative;
+  user-select: none;
+}
+
+.squircle-box:hover {
+  transform: translateY(-6px);
+  border-color: var(--box-accent, var(--border-active));
+  box-shadow: 0 20px 45px rgba(0, 0, 0, 0.6), inset 0 1px 0 rgba(255, 255, 255, 0.15);
+  background: rgba(22, 28, 42, 0.95);
+}
+
+.squircle-box:active {
+  transform: translateY(-2px) scale(0.99);
+}
+
+.squircle-box.active-selected {
+  border-color: var(--box-accent, var(--border-active));
+  box-shadow: 0 0 0 1px var(--box-accent, var(--border-active)), 0 14px 40px rgba(0, 0, 0, 0.5);
+}
+
+.squircle-icon-wrap {
+  width: 60px;
+  height: 60px;
+  border-radius: 18px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.7rem;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid var(--border-subtle);
+  transition: transform 0.25s var(--ease-apple);
+}
+
+.squircle-box:hover .squircle-icon-wrap {
+  transform: scale(1.08);
+}
+
+.squircle-text {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: var(--text-main);
+  letter-spacing: -0.015em;
+  line-height: 1.35;
+}
+
+.squircle-subtext {
+  font-size: 0.84rem;
+  color: var(--text-secondary);
+  line-height: 1.4;
+}
+
+/* Individual Topic Accents */
+.squircle-box-trig {
+  --box-accent: var(--accent-topic-trig);
+}
+
+.squircle-box-calc {
+  --box-accent: var(--accent-topic-calc);
+}
+
+.squircle-box-relativity {
+  --box-accent: var(--accent-topic-rel);
+}
+
+/* Apple Toast Feedback */
+.toast-msg {
+  display: none;
+  position: fixed;
+  bottom: 28px;
+  background: rgba(20, 24, 36, 0.9);
+  backdrop-filter: blur(20px);
+  border: 1px solid var(--border-subtle);
+  color: var(--text-main);
+  font-size: 0.88rem;
+  font-weight: 500;
+  padding: 12px 22px;
+  border-radius: 980px;
+  box-shadow: 0 12px 36px rgba(0, 0, 0, 0.6);
+  z-index: 999;
+  align-items: center;
+  gap: 8px;
+  animation: step-fade-in 0.25s var(--ease-spring);
+}

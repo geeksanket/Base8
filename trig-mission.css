@@ -1,0 +1,923 @@
+/* ==========================================================================
+   Base8 // NASA Space Apps Challenge 2026 — Trigonometry Mission Module
+   SHARP EDGES // TECHNICAL HUD & INSTRUMENT PANEL DESIGN SYSTEM
+   Zero Bubbly Corners — Crisp 1px Precision Borders — Direct Manipulation
+   ========================================================================== */
+
+:root {
+  --hud-bg-deep: #05080f;
+  --hud-bg-surface: #0a0e17;
+  --hud-bg-panel: #0f1624;
+  --hud-bg-card: #141c2e;
+  --hud-bg-input: #080c14;
+
+  --hud-border-subtle: #1e293b;
+  --hud-border-active: #3b82f6;
+  --hud-border-nvidia: #76b900;
+  --hud-border-orange: #ea580c;
+  --hud-border-cyan: #00e5ff;
+
+  --hud-accent-blue: #2563eb;
+  --hud-accent-cyan: #00e5ff;
+  --hud-accent-green: #10b981;
+  --hud-accent-orange: #f97316;
+  --hud-accent-amber: #f59e0b;
+
+  --hud-text-main: #f8fafc;
+  --hud-text-muted: #94a3b8;
+  --hud-text-dim: #64748b;
+
+  --hud-font-mono: "SF Mono", "Fira Code", Menlo, Consolas, monospace;
+}
+
+.trig-module-wrapper {
+  display: none;
+  width: 100%;
+  max-width: 1020px;
+  margin: 0 auto;
+  position: relative;
+  z-index: 10;
+  animation: trig-fade-in 0.25s ease-out forwards;
+}
+
+.trig-module-wrapper.active {
+  display: block;
+}
+
+@keyframes trig-fade-in {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* --------------------------------------------------------------------------
+   Master Top HUD Bar (SHARP EDGES)
+   -------------------------------------------------------------------------- */
+.trig-top-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: var(--hud-bg-surface);
+  border: 1px solid var(--hud-border-subtle);
+  border-bottom: 2px solid var(--hud-accent-blue);
+  border-radius: 0; /* STRICTLY SHARP */
+  padding: 12px 18px;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.trig-brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.trig-logo-icon {
+  width: 26px;
+  height: 26px;
+  background: var(--hud-accent-blue);
+  color: #fff;
+  border-radius: 0; /* SHARP */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 13px;
+  font-weight: 800;
+  letter-spacing: -1px;
+}
+
+.trig-brand-text {
+  display: flex;
+  flex-direction: column;
+}
+
+.trig-brand-title {
+  font-size: 0.88rem;
+  font-weight: 800;
+  letter-spacing: 0.5px;
+  color: #ffffff;
+  text-transform: uppercase;
+}
+
+.trig-brand-subtitle {
+  font-size: 0.72rem;
+  color: var(--hud-text-muted);
+  font-family: var(--hud-font-mono);
+}
+
+.trig-nav-actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.trig-btn-ghost {
+  background: var(--hud-bg-panel);
+  border: 1px solid var(--hud-border-subtle);
+  color: var(--hud-text-main);
+  padding: 6px 14px;
+  border-radius: 0; /* SHARP */
+  font-size: 0.78rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  transition: all 0.15s ease;
+}
+
+.trig-btn-ghost:hover {
+  background: #1e293b;
+  border-color: var(--hud-accent-cyan);
+  color: var(--hud-accent-cyan);
+}
+
+/* --------------------------------------------------------------------------
+   Stage Navigation Tabs (SHARP EDGES)
+   -------------------------------------------------------------------------- */
+.trig-stage-nav {
+  display: flex;
+  align-items: stretch;
+  background: var(--hud-bg-deep);
+  border: 1px solid var(--hud-border-subtle);
+  border-top: none;
+  overflow-x: auto;
+}
+
+.trig-step-pill {
+  flex: 1;
+  min-width: 130px;
+  padding: 10px 14px;
+  border-radius: 0; /* SHARP */
+  border: none;
+  border-right: 1px solid var(--hud-border-subtle);
+  border-bottom: 2px solid transparent;
+  font-size: 0.74rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.6px;
+  background: var(--hud-bg-surface);
+  color: var(--hud-text-dim);
+  cursor: pointer;
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 2px;
+  white-space: nowrap;
+  transition: all 0.15s ease;
+}
+
+.trig-step-pill:hover {
+  background: var(--hud-bg-panel);
+  color: var(--hud-text-main);
+}
+
+.trig-step-pill.active {
+  background: var(--hud-bg-panel);
+  color: var(--hud-accent-cyan);
+  border-bottom: 2px solid var(--hud-accent-cyan);
+}
+
+.trig-step-pill.completed {
+  color: var(--hud-accent-green);
+  border-bottom: 2px solid var(--hud-accent-green);
+}
+
+/* --------------------------------------------------------------------------
+   Stage Main Card (SHARP EDGES)
+   -------------------------------------------------------------------------- */
+.trig-stage-card {
+  display: none;
+  background: var(--hud-bg-surface);
+  border: 1px solid var(--hud-border-subtle);
+  border-top: none;
+  border-radius: 0; /* SHARP */
+  padding: 24px;
+}
+
+.trig-stage-card.active {
+  display: block;
+}
+
+/* Stage Headers */
+.trig-header-row {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 18px;
+  border-bottom: 1px solid var(--hud-border-subtle);
+  padding-bottom: 14px;
+}
+
+.trig-mission-brief-tag {
+  font-size: 0.72rem;
+  font-weight: 800;
+  letter-spacing: 1px;
+  color: var(--hud-accent-cyan);
+  text-transform: uppercase;
+  font-family: var(--hud-font-mono);
+}
+
+.trig-stage-title {
+  font-size: 1.55rem;
+  font-weight: 800;
+  color: #ffffff;
+  letter-spacing: -0.3px;
+  margin-top: 2px;
+}
+
+.trig-stage-desc {
+  font-size: 0.9rem;
+  color: var(--hud-text-muted);
+  line-height: 1.5;
+  margin-top: 4px;
+  max-width: 780px;
+}
+
+.trig-stage-tag-badge {
+  background: var(--hud-bg-panel);
+  border: 1px solid var(--hud-accent-blue);
+  color: #93c5fd;
+  font-size: 0.72rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.8px;
+  padding: 4px 10px;
+  border-radius: 0; /* SHARP */
+  font-family: var(--hud-font-mono);
+}
+
+/* --------------------------------------------------------------------------
+   THEORY FIRST: Fun & Interactive Theory Playground
+   -------------------------------------------------------------------------- */
+.trig-theory-box {
+  background: var(--hud-bg-panel);
+  border: 1px solid var(--hud-border-subtle);
+  border-left: 3px solid var(--hud-accent-cyan);
+  border-radius: 0; /* SHARP */
+  padding: 18px 20px;
+  margin-bottom: 20px;
+}
+
+.trig-rover-chatter-box {
+  background: #060c18;
+  border: 1px solid #1e293b;
+  border-left: 3px solid var(--hud-border-nvidia);
+  border-radius: 0; /* SHARP */
+  padding: 10px 14px;
+  margin-bottom: 14px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-family: var(--hud-font-mono);
+  font-size: 0.8rem;
+  color: #94a3b8;
+}
+
+.trig-rover-avatar {
+  background: #1e293b;
+  border: 1px solid var(--hud-border-nvidia);
+  color: var(--hud-border-nvidia);
+  font-weight: 800;
+  font-size: 0.72rem;
+  padding: 4px 8px;
+  white-space: nowrap;
+}
+
+.trig-fun-tabs {
+  display: flex;
+  gap: 4px;
+  margin-top: 10px;
+  flex-wrap: wrap;
+}
+
+.trig-fun-tab-btn {
+  background: var(--hud-bg-deep);
+  border: 1px solid var(--hud-border-subtle);
+  color: var(--hud-text-muted);
+  font-size: 0.74rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  padding: 6px 12px;
+  border-radius: 0; /* SHARP */
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  transition: all 0.15s ease;
+  font-family: var(--hud-font-mono);
+}
+
+.trig-fun-tab-btn:hover {
+  background: var(--hud-bg-card);
+  border-color: var(--hud-accent-cyan);
+  color: #ffffff;
+}
+
+.trig-fun-tab-btn.active {
+  background: var(--hud-accent-blue);
+  border-color: var(--hud-accent-cyan);
+  color: #ffffff;
+}
+
+.trig-mini-target-banner {
+  background: #042f2e;
+  border: 1px solid #0d9488;
+  border-radius: 0; /* SHARP */
+  padding: 8px 14px;
+  margin-top: 10px;
+  font-size: 0.78rem;
+  color: #5eead4;
+  font-family: var(--hud-font-mono);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.trig-theory-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+  margin-top: 14px;
+}
+
+@media (max-width: 820px) {
+  .trig-theory-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.trig-theory-card {
+  background: var(--hud-bg-card);
+  border: 1px solid var(--hud-border-subtle);
+  border-radius: 0; /* SHARP */
+  padding: 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.trig-theory-card.card-blue { border-top: 2px solid var(--hud-accent-blue); }
+.trig-theory-card.card-green { border-top: 2px solid var(--hud-accent-green); }
+.trig-theory-card.card-orange { border-top: 2px solid var(--hud-accent-orange); }
+
+.trig-theory-card-title {
+  font-size: 0.78rem;
+  font-weight: 800;
+  letter-spacing: 0.6px;
+  text-transform: uppercase;
+  font-family: var(--hud-font-mono);
+}
+
+.trig-theory-card-body {
+  font-size: 0.82rem;
+  color: var(--hud-text-muted);
+  line-height: 1.45;
+}
+
+.trig-formula-display {
+  background: var(--hud-bg-deep);
+  border: 1px solid #1e293b;
+  border-radius: 0; /* SHARP */
+  padding: 10px 14px;
+  margin-top: 12px;
+  font-family: var(--hud-font-mono);
+  font-size: 0.88rem;
+  color: var(--hud-accent-cyan);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+/* --------------------------------------------------------------------------
+   Blueprint Canvas & Direct Draggable Handles (SHARP EDGES)
+   -------------------------------------------------------------------------- */
+.trig-blueprint-board {
+  position: relative;
+  width: 100%;
+  min-height: 380px;
+  background-color: #070c18;
+  background-image:
+    linear-gradient(rgba(30, 41, 59, 0.3) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(30, 41, 59, 0.3) 1px, transparent 1px);
+  background-size: 20px 20px;
+  border: 1px solid var(--hud-border-subtle);
+  border-radius: 0; /* SHARP */
+  overflow: hidden;
+  margin-bottom: 16px;
+  user-select: none;
+}
+
+.trig-drag-instructions-banner {
+  position: absolute;
+  top: 12px;
+  left: 14px;
+  background: rgba(10, 14, 23, 0.88);
+  border: 1px solid var(--hud-accent-cyan);
+  border-radius: 0; /* SHARP */
+  padding: 6px 12px;
+  font-size: 0.74rem;
+  font-weight: 700;
+  color: var(--hud-accent-cyan);
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  font-family: var(--hud-font-mono);
+  pointer-events: none;
+  z-index: 5;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+/* Live Telemetry Bar Overlay */
+.trig-live-telemetry-hud {
+  position: absolute;
+  bottom: 12px;
+  left: 14px;
+  right: 14px;
+  background: rgba(10, 14, 23, 0.92);
+  border: 1px solid var(--hud-border-subtle);
+  border-left: 3px solid var(--hud-border-nvidia);
+  border-radius: 0; /* SHARP */
+  padding: 8px 14px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  flex-wrap: wrap;
+  font-family: var(--hud-font-mono);
+  font-size: 0.78rem;
+  z-index: 5;
+}
+
+.trig-telemetry-item {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.trig-telemetry-label {
+  color: var(--hud-text-dim);
+  text-transform: uppercase;
+}
+
+.trig-telemetry-val {
+  color: #ffffff;
+  font-weight: 700;
+}
+
+/* Draggable Handles */
+.trig-drag-handle {
+  cursor: ns-resize;
+  transition: transform 0.1s ease;
+}
+
+.trig-drag-handle:hover,
+.trig-drag-handle:active {
+  transform: scale(1.25);
+  filter: drop-shadow(0 0 8px var(--hud-accent-orange));
+}
+
+.trig-drag-handle-rover {
+  cursor: ew-resize;
+}
+
+.trig-drag-handle-rover:hover,
+.trig-drag-handle-rover:active {
+  filter: drop-shadow(0 0 8px var(--hud-accent-cyan));
+}
+
+/* Animated Laser */
+@keyframes laser-pulse {
+  0% { stroke-dashoffset: 0; filter: drop-shadow(0 0 2px #3b82f6); }
+  50% { filter: drop-shadow(0 0 8px #60a5fa); }
+  100% { stroke-dashoffset: -32; filter: drop-shadow(0 0 2px #3b82f6); }
+}
+
+.animated-laser {
+  stroke-dasharray: 8 6;
+  animation: laser-pulse 1.2s linear infinite;
+}
+
+/* --------------------------------------------------------------------------
+   Stage 2 View Toggle & Concept Quiz (SHARP EDGES)
+   -------------------------------------------------------------------------- */
+.trig-view-toggle {
+  display: inline-flex;
+  background: var(--hud-bg-deep);
+  border: 1px solid var(--hud-border-subtle);
+  border-radius: 0; /* SHARP */
+  padding: 2px;
+  gap: 2px;
+}
+
+.trig-view-btn {
+  background: transparent;
+  border: none;
+  color: var(--hud-text-dim);
+  font-size: 0.76rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  padding: 6px 12px;
+  border-radius: 0; /* SHARP */
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.trig-view-btn.active {
+  background: var(--hud-accent-blue);
+  color: #ffffff;
+}
+
+.trig-quiz-box {
+  background: var(--hud-bg-panel);
+  border: 1px solid var(--hud-border-subtle);
+  border-radius: 0; /* SHARP */
+  padding: 16px;
+  margin-top: 14px;
+}
+
+.trig-quiz-question {
+  font-size: 0.88rem;
+  font-weight: 700;
+  color: #ffffff;
+  margin-bottom: 12px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.trig-quiz-options {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.trig-quiz-opt {
+  flex: 1;
+  min-width: 200px;
+  background: var(--hud-bg-deep);
+  border: 1px solid var(--hud-border-subtle);
+  border-radius: 0; /* SHARP */
+  padding: 10px 14px;
+  font-size: 0.82rem;
+  color: var(--hud-text-muted);
+  cursor: pointer;
+  transition: all 0.15s ease;
+  user-select: none;
+}
+
+.trig-quiz-opt:hover {
+  background: var(--hud-bg-card);
+  border-color: var(--hud-accent-cyan);
+  color: #ffffff;
+}
+
+.trig-quiz-opt.correct {
+  background: #064e3b;
+  border-color: var(--hud-accent-green);
+  color: #6ee7b7;
+  font-weight: 700;
+}
+
+.trig-quiz-opt.incorrect {
+  background: #450a0a;
+  border-color: #ef4444;
+  color: #fca5a5;
+}
+
+/* --------------------------------------------------------------------------
+   Tactile Drag & Drop (SHARP EDGES)
+   -------------------------------------------------------------------------- */
+.trig-labels-palette {
+  background: var(--hud-bg-panel);
+  border: 1px solid var(--hud-border-subtle);
+  border-radius: 0; /* SHARP */
+  padding: 14px 18px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.trig-draggable-badge {
+  background: var(--hud-bg-card);
+  border: 1px solid var(--hud-accent-blue);
+  color: #ffffff;
+  padding: 8px 16px;
+  border-radius: 0; /* SHARP */
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  cursor: grab;
+  user-select: none;
+  font-family: var(--hud-font-mono);
+  transition: all 0.15s ease;
+}
+
+.trig-draggable-badge:active {
+  cursor: grabbing;
+}
+
+.trig-draggable-badge.selected-for-drop {
+  border-color: var(--hud-accent-amber);
+  background: #78350f;
+  color: #ffffff;
+}
+
+.trig-draggable-badge.placed {
+  opacity: 0.35;
+  border-style: dashed;
+  cursor: default;
+  pointer-events: none;
+}
+
+.trig-coaching-toast {
+  font-size: 0.82rem;
+  color: #fbbf24;
+  background: #451a03;
+  border: 1px solid #d97706;
+  border-radius: 0; /* SHARP */
+  padding: 8px 14px;
+  margin-bottom: 12px;
+  display: none;
+  font-family: var(--hud-font-mono);
+}
+
+/* --------------------------------------------------------------------------
+   Angle Slider Lab & Sharp Preset Cards
+   -------------------------------------------------------------------------- */
+.trig-slider-lab-control {
+  background: var(--hud-bg-panel);
+  border: 1px solid var(--hud-border-subtle);
+  border-radius: 0; /* SHARP */
+  padding: 14px 18px;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  flex-wrap: wrap;
+  margin-bottom: 14px;
+}
+
+.trig-range-slider {
+  flex: 1;
+  min-width: 180px;
+  accent-color: var(--hud-accent-blue);
+  height: 6px;
+  cursor: pointer;
+  border-radius: 0; /* SHARP */
+}
+
+.trig-angle-badge-readout {
+  background: var(--hud-bg-deep);
+  border: 1px solid var(--hud-accent-amber);
+  color: #fbbf24;
+  font-size: 0.92rem;
+  font-weight: 800;
+  padding: 6px 12px;
+  border-radius: 0; /* SHARP */
+  font-family: var(--hud-font-mono);
+}
+
+.trig-presets-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+  margin-bottom: 16px;
+}
+
+@media (max-width: 768px) {
+  .trig-presets-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.trig-preset-card {
+  background: var(--hud-bg-panel);
+  border: 1px solid var(--hud-border-subtle);
+  border-radius: 0; /* SHARP */
+  padding: 12px 14px;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.trig-preset-card:hover {
+  background: var(--hud-bg-card);
+  border-color: var(--hud-accent-blue);
+}
+
+.trig-preset-card.active {
+  background: var(--hud-bg-card);
+  border: 1px solid var(--hud-accent-cyan);
+  border-left: 3px solid var(--hud-accent-cyan);
+}
+
+.trig-preset-badge {
+  font-size: 0.65rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  color: var(--hud-accent-cyan);
+  font-family: var(--hud-font-mono);
+}
+
+.trig-preset-title {
+  font-size: 0.88rem;
+  font-weight: 700;
+  color: #ffffff;
+}
+
+.trig-preset-stats {
+  font-size: 0.78rem;
+  font-family: var(--hud-font-mono);
+  color: var(--hud-accent-orange);
+  display: flex;
+  justify-content: space-between;
+  margin-top: 4px;
+}
+
+/* --------------------------------------------------------------------------
+   Stage 5 Terminal & Victory HUD (SHARP EDGES)
+   -------------------------------------------------------------------------- */
+.trig-terminal-card {
+  background: var(--hud-bg-panel);
+  border: 1px solid var(--hud-border-subtle);
+  border-radius: 0; /* SHARP */
+  padding: 18px;
+  margin-top: 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.trig-input-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.trig-number-input {
+  background: var(--hud-bg-deep);
+  border: 1px solid var(--hud-border-subtle);
+  color: #ffffff;
+  padding: 8px 12px;
+  border-radius: 0; /* SHARP */
+  font-size: 1rem;
+  font-weight: 700;
+  font-family: var(--hud-font-mono);
+  width: 160px;
+  outline: none;
+}
+
+.trig-number-input:focus {
+  border-color: var(--hud-accent-cyan);
+}
+
+.trig-hint-banner {
+  background: #1c1917;
+  border: 1px solid #d97706;
+  border-radius: 0; /* SHARP */
+  padding: 10px 14px;
+  font-size: 0.82rem;
+  color: #fef3c7;
+  font-family: var(--hud-font-mono);
+}
+
+.trig-victory-modal {
+  display: none;
+  background: #064e3b;
+  border: 1px solid var(--hud-accent-green);
+  border-radius: 0; /* SHARP */
+  padding: 24px;
+  text-align: center;
+  margin-top: 16px;
+}
+
+.trig-victory-modal.active {
+  display: block;
+}
+
+.trig-victory-title {
+  font-size: 1.5rem;
+  font-weight: 800;
+  color: #6ee7b7;
+  margin-bottom: 6px;
+  text-transform: uppercase;
+}
+
+.trig-victory-body {
+  font-size: 0.92rem;
+  color: #e2e8f0;
+  line-height: 1.5;
+  max-width: 620px;
+  margin: 0 auto 16px auto;
+}
+
+/* Footer Summary Cards */
+.trig-footer-card {
+  background: var(--hud-bg-panel);
+  border: 1px solid var(--hud-border-subtle);
+  border-radius: 0; /* SHARP */
+  padding: 14px 18px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+  flex-wrap: wrap;
+  margin-top: 14px;
+}
+
+.trig-footer-text {
+  font-size: 0.84rem;
+  color: var(--hud-text-muted);
+  line-height: 1.45;
+  flex: 1;
+}
+
+.trig-pill-indicator {
+  background: var(--hud-bg-deep);
+  border: 1px solid var(--hud-border-nvidia);
+  color: var(--hud-border-nvidia);
+  font-size: 0.68rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.8px;
+  padding: 4px 8px;
+  border-radius: 0; /* SHARP */
+  font-family: var(--hud-font-mono);
+}
+
+/* Action Buttons */
+.trig-stage-actions {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 18px;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.trig-btn-primary {
+  background: var(--hud-accent-blue);
+  border: 1px solid #3b82f6;
+  color: #ffffff;
+  padding: 9px 20px;
+  border-radius: 0; /* SHARP */
+  font-size: 0.85rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  transition: all 0.15s ease;
+}
+
+.trig-btn-primary:hover {
+  background: #1d4ed8;
+  border-color: var(--hud-accent-cyan);
+}
+
+.trig-btn-secondary {
+  background: var(--hud-bg-panel);
+  border: 1px solid var(--hud-border-subtle);
+  color: var(--hud-text-muted);
+  padding: 9px 16px;
+  border-radius: 0; /* SHARP */
+  font-size: 0.82rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  transition: all 0.15s ease;
+}
+
+.trig-btn-secondary:hover {
+  background: #1e293b;
+  color: #ffffff;
+}
+
+.trig-sound-toggle {
+  background: var(--hud-bg-panel);
+  border: 1px solid var(--hud-border-subtle);
+  color: var(--hud-text-muted);
+  border-radius: 0; /* SHARP */
+  padding: 6px 10px;
+  cursor: pointer;
+  font-size: 0.74rem;
+  font-family: var(--hud-font-mono);
+}

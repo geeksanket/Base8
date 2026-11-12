@@ -1,0 +1,699 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AstroLearn // NASA Space Apps Challenge 2026</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="apple-experience.css">
+</head>
+<body>
+
+  <!-- Subtle Atmospheric Parallax Canvas (Mars Dust & Stars) -->
+  <canvas id="mars-particle-canvas"></canvas>
+
+  <!-- =========================================================================
+       ONBOARDING FLOW CONTAINER (Intro Video + Questions + Squircle Hub)
+       ========================================================================= -->
+  <div class="flow-container">
+
+    <!-- Step Progress Bar -->
+    <div class="step-progress-bar" id="stepProgressBar">
+      <div class="step-progress-fill" id="stepProgressFill"></div>
+    </div>
+        <button class="skip-intro btn-skip" onclick="skipIntro()">Skip Intro</button>
+        <button class="continue-intro btn-continue" id="continueIntro" onclick="nextStep()" style="display:none;">Continue</button>
+      </div>
+    </div>
+
+    <!-- ==================================================================
+         STEP 1: WELCOME EXPLORER
+         ================================================================== -->
+    <div class="step-card" id="step-1">
+      <div class="step-badge">✦ Welcome Explorer</div>
+      <h1 class="step-title">Hi there! Welcome to AstroLearn 👋</h1>
+      <p class="step-subtitle">
+        We're excited to have you here. Let's take a quick 30-second tour to tailor your space mathematics and physics journey.
+      </p>
+
+      <div class="step-actions">
+        <button class="btn-next" onclick="nextStep()">
+          <span>Next</span>
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"></polyline></svg>
+        </button>
+      </div>
+    </div>
+
+    <!-- ==================================================================
+         STEP 2: INTEREST QUESTION
+         ================================================================== -->
+    <div class="step-card" id="step-2">
+      <div class="step-badge">Step 1 of 3 · Your Interests</div>
+      <h2 class="step-title">What sparks your curiosity the most?</h2>
+      <p class="step-subtitle">Select the topic you are most excited to explore.</p>
+
+      <div class="choice-list">
+        <div class="choice-option selected" onclick="selectChoice(this)">
+          <div class="choice-icon">🛰️</div>
+          <div>
+            <div class="choice-label">Orbital Mechanics & Satellites</div>
+            <div class="choice-desc">How spacecraft navigate circular orbits using angles and vectors</div>
+          </div>
+          <div class="choice-radio"></div>
+        </div>
+
+        <div class="choice-option" onclick="selectChoice(this)">
+          <div class="choice-icon">🚀</div>
+          <div>
+            <div class="choice-label">Rocket Propulsion & Flight Rates</div>
+            <div class="choice-desc">Instantaneous velocity, launch tangents, and trajectory curves</div>
+          </div>
+          <div class="choice-radio"></div>
+        </div>
+
+        <div class="choice-option" onclick="selectChoice(this)">
+          <div class="choice-icon">⏳</div>
+          <div>
+            <div class="choice-label">Black Holes & The Speed of Light</div>
+            <div class="choice-desc">Curved spacetime fabric and relativistic time dilation</div>
+          </div>
+          <div class="choice-radio"></div>
+        </div>
+      </div>
+
+      <div class="step-actions">
+        <button class="btn-back" onclick="prevStep()">Back</button>
+        <button class="btn-next" onclick="nextStep()">
+          <span>Next</span>
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"></polyline></svg>
+        </button>
+      </div>
+    </div>
+
+    <!-- ==================================================================
+         STEP 3: AGE QUESTION
+         ================================================================== -->
+    <div class="step-card" id="step-3">
+      <div class="step-badge">Step 2 of 3 · Learning Level</div>
+      <h2 class="step-title">What is your age group?</h2>
+      <p class="step-subtitle">This helps us present scientific concepts at the right depth.</p>
+
+      <div class="choice-list">
+        <div class="choice-option" onclick="selectChoice(this)">
+          <div class="choice-icon">🎒</div>
+          <div>
+            <div class="choice-label">Under 14 years</div>
+            <div class="choice-desc">School student / Young curious explorer</div>
+          </div>
+          <div class="choice-radio"></div>
+        </div>
+
+        <div class="choice-option selected" onclick="selectChoice(this)">
+          <div class="choice-icon">🎓</div>
+          <div>
+            <div class="choice-label">14 – 18 years</div>
+            <div class="choice-desc">High school student / STEM enthusiast</div>
+          </div>
+          <div class="choice-radio"></div>
+        </div>
+
+        <div class="choice-option" onclick="selectChoice(this)">
+          <div class="choice-icon">🏛️</div>
+          <div>
+            <div class="choice-label">18 – 24 years</div>
+            <div class="choice-desc">College or university student</div>
+          </div>
+          <div class="choice-radio"></div>
+        </div>
+
+        <div class="choice-option" onclick="selectChoice(this)">
+          <div class="choice-icon">🌌</div>
+          <div>
+            <div class="choice-label">24+ years</div>
+            <div class="choice-desc">Lifelong learner / Curious space enthusiast</div>
+          </div>
+          <div class="choice-radio"></div>
+        </div>
+      </div>
+
+      <div class="step-actions">
+        <button class="btn-back" onclick="prevStep()">Back</button>
+        <button class="btn-next" onclick="nextStep()">
+          <span>Next</span>
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"></polyline></svg>
+        </button>
+      </div>
+    </div>
+
+    <!-- ==================================================================
+         STEP 4: LEARNING GOAL QUESTION
+         ================================================================== -->
+    <div class="step-card" id="step-4">
+      <div class="step-badge">Step 3 of 3 · Your Goal</div>
+      <h2 class="step-title">How do you prefer to learn?</h2>
+      <p class="step-subtitle">Choose the style that feels most natural to you.</p>
+
+      <div class="choice-list">
+        <div class="choice-option selected" onclick="selectChoice(this)">
+          <div class="choice-icon">🎮</div>
+          <div>
+            <div class="choice-label">Interactive visual experiments & sliders</div>
+            <div class="choice-desc">Learning by directly manipulating scientific parameters</div>
+          </div>
+          <div class="choice-radio"></div>
+        </div>
+
+        <div class="choice-option" onclick="selectChoice(this)">
+          <div class="choice-icon">🧩</div>
+          <div>
+            <div class="choice-label">Bite-sized space puzzles & missions</div>
+            <div class="choice-desc">Solving step-by-step challenges with instant feedback</div>
+          </div>
+          <div class="choice-radio"></div>
+        </div>
+
+        <div class="choice-option" onclick="selectChoice(this)">
+          <div class="choice-icon">📖</div>
+          <div>
+            <div class="choice-label">Deep conceptual & mathematical clarity</div>
+            <div class="choice-desc">Discovering the physics behind real NASA missions</div>
+          </div>
+          <div class="choice-radio"></div>
+        </div>
+      </div>
+
+      <div class="step-actions">
+        <button class="btn-back" onclick="prevStep()">Back</button>
+        <button class="btn-next" onclick="nextStep()">
+          <span>Complete Setup</span>
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"></polyline></svg>
+        </button>
+      </div>
+    </div>
+
+    <!-- ==================================================================
+         STEP 5: MAIN LANDING PAGE WITH EXACTLY 3 SQUIRCLES
+         ================================================================== -->
+    <div class="final-landing-container" id="finalLanding">
+      <div class="landing-header">
+        <div class="step-badge">✦ All Set! Choose Your Topic</div>
+        <h1>Pick What You Want to Explore</h1>
+        <p>Select any squircle below to begin your journey.</p>
+      </div>
+
+      <!-- Exactly 3 Squircled Boxes -->
+      <div class="squircle-grid">
+
+        <!-- Box 1: Trigonometry (Launches Apple Experience) -->
+        <div class="squircle-box squircle-box-trig" id="box-trig" onclick="selectSquircle('box-trig', 'Trigonometry')">
+          <div class="squircle-icon-wrap">📐</div>
+          <div class="squircle-text">I wanna learn trigonometry</div>
+          <div class="squircle-subtext">The Geometry of the Mountain // NASA Space Apps</div>
+          <span style="font-size:0.72rem; font-weight:700; color:#00e5ff; background:#082f49; padding:4px 12px; border-radius:12px; margin-top:6px;">Launch Experience 🚀</span>
+        </div>
+
+        <!-- Box 2: Calculus -->
+        <div class="squircle-box squircle-box-calc" id="box-calc" onclick="selectSquircle('box-calc', 'Calculus')">
+          <div class="squircle-icon-wrap">🚀</div>
+          <div class="squircle-text">I wanna learn calculus</div>
+          <div class="squircle-subtext">Rocket Derivatives & Integrals</div>
+        </div>
+
+        <!-- Box 3: Theory of Relativity -->
+        <div class="squircle-box squircle-box-relativity" id="box-relativity" onclick="selectSquircle('box-relativity', 'Theory of Relativity')">
+          <div class="squircle-icon-wrap">🌌</div>
+          <div class="squircle-text">I wanna learn theory of relativity</div>
+          <div class="squircle-subtext">Spacetime & Light Speed</div>
+        </div>
+
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Toast Feedback -->
+  <div class="toast-msg" id="toastMsg"></div>
+
+  <!-- =========================================================================
+       APPLE-LEVEL INTERACTIVE SCIENCE EXPERIENCE WRAPPER
+       (Hidden until user launches Trigonometry or visits #geometry)
+       ========================================================================= -->
+  <div id="appleExperienceWrapper" style="display:none; width:100%;">
+
+    <!-- Apple-Style Floating Glass Navigation Bar -->
+    <nav class="apple-nav">
+      <a href="#" class="apple-nav-brand">
+        <div class="apple-nav-logo">▲</div>
+        <span class="apple-nav-title">Base8</span>
+        <span class="apple-nav-tag">NASA Space Apps 2026</span>
+      </a>
+
+      <ul class="apple-nav-links">
+        <li><a href="#dilemma" class="apple-nav-link">01 Recon</a></li>
+        <li><a href="#abstraction" class="apple-nav-link">02 The Anchor</a></li>
+        <li><a href="#three-sides" class="apple-nav-link">03 Three Sides</a></li>
+        <li><a href="#tangent" class="apple-nav-link">04 Tangent</a></li>
+        <li><a href="#sandbox" class="apple-nav-link">05 Interactive Lab</a></li>
+        <li><a href="#model-builder" class="apple-nav-link">06 Model</a></li>
+        <li><a href="#mission-solve" class="apple-nav-link">07 Final Solve</a></li>
+      </ul>
+
+      <div class="apple-nav-actions">
+        <button class="apple-nav-btn" id="navAudioToggle" onclick="toggleAudio()">Audio: ON</button>
+        <button class="apple-nav-btn" onclick="exitAppleExperience()">← Exit to Hub</button>
+      </div>
+    </nav>
+
+    <!-- Full-Screen Cinematic Opening Hero Section -->
+    <header class="hero-section">
+      <div class="hero-background-gradient"></div>
+
+      <div class="hero-eyebrow">
+        <span>● Surface Reconnaissance</span>
+        <span>·</span>
+        <span>Mars Equatorial Basin</span>
+      </div>
+
+      <h1 class="hero-title">The Geometry of the Mountain</h1>
+
+      <p class="hero-subtitle">
+        An impassable rockface. A precision laser rangefinder. And the ancient right-angled geometry that allows NASA scientists to calculate towering planetary elevations without taking a single step.
+      </p>
+
+      <div class="hero-actions">
+        <a href="#dilemma" class="btn-apple-primary">Begin Exploration ↓</a>
+        <a href="#sandbox" class="btn-apple-secondary">Explore Interactive Lab ⚡</a>
+      </div>
+
+      <!-- Live Telemetry Strip -->
+      <div class="hero-data-strip">
+        <div class="hero-data-item">
+          <span class="hero-data-label">Target Formation</span>
+          <span class="hero-data-value">Mount Elysium</span>
+        </div>
+        <div class="hero-data-item">
+          <span class="hero-data-label">Ground Baseline</span>
+          <span class="hero-data-value">24.0 km</span>
+        </div>
+        <div class="hero-data-item">
+          <span class="hero-data-label">Inclinometer Angle</span>
+          <span class="hero-data-value">36.87°</span>
+        </div>
+        <div class="hero-data-item">
+          <span class="hero-data-label">Summit Elevation</span>
+          <span class="hero-data-value" style="color:var(--color-accent-cyan);">Unknown (?)</span>
+        </div>
+      </div>
+    </header>
+
+    <!-- Continuous Scroll Storytelling Showcase (Pinned Visuals + Scrolling Chapters) -->
+    <section class="story-showcase" id="story-showcase">
+      <div class="story-sticky-container">
+
+        <!-- Left Pinned Visual Column -->
+        <div class="story-visual-column">
+          <div class="story-visual-frame">
+
+            <!-- Sticky HUD Overlay -->
+            <div class="story-visual-hud">
+              <span class="story-visual-hud-tag">
+                <span style="color:#30d158;">●</span> Telemetry Feed
+              </span>
+              <div class="story-visual-hud-values">
+                <span>Distance: <strong id="stickyHudBase">24.0 km</strong></span>
+                <span>Elevation: <strong id="stickyHudHeight" style="color:var(--color-accent-cyan);">Unknown (?)</strong></span>
+                <span>Angle: <strong id="stickyHudAngle" style="color:var(--color-accent-amber);">36.9°</strong></span>
+              </div>
+            </div>
+
+            <!-- Dynamic SVG Geometric Canvas (viewBox="0 0 640 440") -->
+            <svg id="stickySvgCanvas" viewBox="0 0 640 440" style="width:100%; height:100%; display:block;">
+              <defs>
+                <linearGradient id="stkMarsSky" x1="0%" y1="0%" x2="0%" y2="100%">
+                  <stop offset="0%" stop-color="#05070b"/>
+                  <stop offset="65%" stop-color="#121622"/>
+                  <stop offset="100%" stop-color="#241410"/>
+                </linearGradient>
+                <linearGradient id="stkMountainGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                  <stop offset="0%" stop-color="#e05a36"/>
+                  <stop offset="60%" stop-color="#b84628"/>
+                  <stop offset="100%" stop-color="#6e2614"/>
+                </linearGradient>
+              </defs>
+
+              <rect x="0" y="0" width="640" height="440" fill="url(#stkMarsSky)"/>
+
+              <!-- Blueprint Grid Lines -->
+              <g id="stickyGeoMesh" style="opacity:0; transition:opacity 0.5s ease;">
+                <pattern id="stkGridPat" width="24" height="24" patternUnits="userSpaceOnUse">
+                  <path d="M 24 0 L 0 0 0 24" fill="none" stroke="rgba(255,255,255,0.06)" stroke-width="1"/>
+                </pattern>
+                <rect x="0" y="0" width="640" height="440" fill="url(#stkGridPat)"/>
+              </g>
+
+              <!-- Orbital Transmission Beam -->
+              <line id="stickyOrbitalBeam" x1="490" y1="197" x2="490" y2="0" stroke="#64d2ff" stroke-width="4" stroke-linecap="round" style="display:none; filter:drop-shadow(0 0 16px #2997ff);"/>
+
+              <!-- Plumb Line Gravity Test -->
+              <line id="stickyPlumbLine" x1="490" y1="197" x2="490" y2="350" stroke="#64d2ff" stroke-width="3" stroke-linecap="round" style="opacity:0; transition:opacity 0.3s ease; filter:drop-shadow(0 0 8px #2997ff);"/>
+
+              <!-- Mountain Polygon -->
+              <polygon id="stickyMountainPoly" points="490,197 610,350 120,350" fill="url(#stkMountainGrad)" stroke="#e05a36" stroke-width="1.5"/>
+
+              <!-- Ground Horizon -->
+              <rect x="0" y="350" width="640" height="90" fill="#141824"/>
+              <line x1="0" y1="350" x2="640" y2="350" stroke="rgba(255,255,255,0.14)" stroke-width="1.5"/>
+
+              <!-- 90° Square Anchor -->
+              <g id="stickyRightCorner" style="opacity:0.3; transition:opacity 0.4s ease;">
+                <rect x="470" y="330" width="20" height="20" fill="none" stroke="#64d2ff" stroke-width="2"/>
+                <circle cx="480" cy="340" r="2.5" fill="#64d2ff"/>
+              </g>
+
+              <!-- Ground Line -->
+              <line id="stickyGroundLine" x1="186" y1="370" x2="490" y2="370" stroke="#30d158" stroke-width="2.5"/>
+              <line x1="186" y1="362" x2="186" y2="378" stroke="#30d158" stroke-width="2"/>
+              <line x1="490" y1="362" x2="490" y2="378" stroke="#30d158" stroke-width="2"/>
+              <text x="338" y="392" text-anchor="middle" fill="#30d158" font-size="11" font-weight="700" font-family="monospace">Base: 24.0 km</text>
+
+              <!-- Vertical Height Line -->
+              <line id="stickyHeightLine" x1="490" y1="197" x2="490" y2="350" stroke="#e05a36" stroke-width="2.5" stroke-dasharray="6 4"/>
+              <line x1="482" y1="197" x2="498" y2="197" stroke="#e05a36" stroke-width="2"/>
+
+              <!-- Laser Beam -->
+              <line id="stickyLaserLine" class="animated-laser-beam" x1="190" y1="330" x2="490" y2="197" stroke="#2997ff" stroke-width="3"/>
+
+              <!-- Summit Marker -->
+              <circle id="stickySummitMarker" cx="490" cy="197" r="6" fill="#2997ff" stroke="#ffffff" stroke-width="2"/>
+
+              <!-- Angle Label -->
+              <text id="stickyAngleText" x="216" y="342" fill="#ffd60a" font-size="11" font-weight="700" font-family="monospace">θ = 36.9°</text>
+
+              <!-- Three Sides Callout Badges -->
+              <g id="stickyThreeSidesCallouts" style="opacity:0; transition:opacity 0.4s ease;">
+                <rect x="260" y="220" width="130" height="24" rx="4" fill="rgba(10,14,22,0.85)" stroke="#2997ff" stroke-width="1"/>
+                <text x="325" y="236" text-anchor="middle" fill="#64d2ff" font-size="10" font-weight="700" font-family="monospace">Slant (Hypotenuse)</text>
+
+                <rect x="506" y="260" width="105" height="24" rx="4" fill="rgba(10,14,22,0.85)" stroke="#e05a36" stroke-width="1"/>
+                <text x="558" y="276" text-anchor="middle" fill="#ff6b4a" font-size="10" font-weight="700" font-family="monospace">Height (Opp)</text>
+              </g>
+
+              <!-- NASA Mars Rover Model -->
+              <g id="stickyRoverGroup" transform="translate(166, 318)">
+                <rect x="0" y="22" width="10" height="12" fill="#334155" rx="2"/>
+                <rect x="14" y="22" width="10" height="12" fill="#334155" rx="2"/>
+                <rect x="28" y="22" width="10" height="12" fill="#334155" rx="2"/>
+                <rect x="2" y="8" width="36" height="18" fill="#f5f5f7" stroke="#cbd5e1" stroke-width="1.5" rx="3"/>
+                <circle cx="20" cy="17" r="5" fill="#0284c7"/>
+                <circle cx="20" cy="17" r="2.5" fill="#64d2ff"/>
+                <line x1="28" y1="8" x2="32" y2="0" stroke="#94a3b8" stroke-width="2"/>
+                <circle cx="32" cy="0" r="3.5" fill="#2997ff"/>
+              </g>
+            </svg>
+          </div>
+        </div>
+
+        <!-- Right Scroll Narrative Column -->
+        <div class="story-narrative-column">
+
+          <!-- Chapter 1: The Dilemma -->
+          <article class="story-chapter active" id="dilemma" data-chapter="dilemma">
+            <span class="story-chapter-eyebrow">Chapter 01 · Reconnaissance</span>
+            <h2 class="story-chapter-title">How tall is what you cannot climb?</h2>
+            <p class="story-chapter-body">
+              You are a NASA scientist guiding an autonomous robotic rover across the red dust of Mars. A sheer, vertical mountain rises from the terrain, blocking your scientific path.
+            </p>
+            <p class="story-chapter-body">
+              Your rover's titanium wheels cannot scale the vertical rockface. Yet Mission Control requires the summit elevation before the orbital satellite passes overhead.
+            </p>
+
+            <div class="chapter-widget">
+              <div class="chapter-widget-title">Mission Instrument: Rangefinder LIDAR</div>
+              <p style="font-size:0.86rem; color:var(--color-text-secondary); margin-bottom:14px; line-height:1.5;">
+                The rover aims its laser diode at the distant peak. We can measure the ground distance (24.0 km) and the launch angle (36.87°). How do we find the height?
+              </p>
+              <button class="btn-apple-primary" onclick="triggerChapterLaser()">
+                <span>📡 Fire Rover Laser Rangefinder</span>
+              </button>
+            </div>
+          </article>
+
+          <!-- Chapter 2: The Geometric Abstraction -->
+          <article class="story-chapter" id="abstraction" data-chapter="abstraction">
+            <span class="story-chapter-eyebrow">Chapter 02 · Geometric Abstraction</span>
+            <h2 class="story-chapter-title">From physical terrain to pure mathematics.</h2>
+            <p class="story-chapter-body">
+              When the rover connects its laser to the mountain summit, three physical axes align: the flat Martian ground, the vertical cliff, and the line-of-sight laser path.
+            </p>
+            <p class="story-chapter-body">
+              Together, they form an exact <strong>right-angled triangle</strong>. Mars gravity pulls 100% straight down toward the planetary core, guaranteeing that the vertical elevation meets the horizontal ground at an exact <strong>90° right angle</strong>.
+            </p>
+
+            <div class="chapter-widget">
+              <div class="chapter-widget-title">The 90° Gravity Anchor</div>
+              <p style="font-size:0.86rem; color:var(--color-text-secondary); margin-bottom:14px; line-height:1.5;">
+                Gravity never falls sideways. This square corner locks all triangle proportions into fixed, predictable values.
+              </p>
+              <button class="btn-apple-secondary" onclick="triggerPlumbTest()">
+                <span>🪨 Test Gravity Plumb Line ⬇️</span>
+              </button>
+            </div>
+          </article>
+
+          <!-- Chapter 3: The Three Named Sides -->
+          <article class="story-chapter" id="three-sides" data-chapter="three-sides">
+            <span class="story-chapter-eyebrow">Chapter 03 · The Anatomy</span>
+            <h2 class="story-chapter-title">Three sides. Three distinct roles.</h2>
+            <p class="story-chapter-body">
+              From the rover's point of observation at angle <strong>θ</strong>, every side has a specific geometric identity:
+            </p>
+
+            <div class="math-callout">
+              • <code>Adjacent (Base): 24.0 km</code> — The measured ground distance tracked by wheel odometry.<br>
+              • <code>Opposite (Height): ? km</code> — The vertical elevation rising straight to the summit.<br>
+              • <code>Hypotenuse (Slant):</code> — The line-of-sight laser distance straight from rover to peak.
+            </div>
+
+            <p class="story-chapter-body">
+              Because this triangle has a fixed 90° corner, the ratio between the <strong>Opposite</strong> (Height) and the <strong>Adjacent</strong> (Base) depends solely on the angle θ.
+            </p>
+          </article>
+
+          <!-- Chapter 4: The Tangent Breakthrough -->
+          <article class="story-chapter" id="tangent" data-chapter="tangent">
+            <span class="story-chapter-eyebrow">Chapter 04 · The Ratio</span>
+            <h2 class="story-chapter-title">The Tangent Breakthrough.</h2>
+            <p class="story-chapter-body">
+              In trigonometry, the function that compares the vertical rise to the horizontal run is called the <strong>Tangent</strong>.
+            </p>
+
+            <div class="math-callout">
+              <code>tan(θ) = Opposite ÷ Adjacent = Height ÷ Distance</code><br>
+              <code>Height = Distance × tan(θ)</code>
+            </div>
+
+            <p class="story-chapter-body">
+              Think of the tangent as an <strong>elevation multiplier</strong>. Knowing our baseline distance of <strong>24 km</strong> and an angle of <strong>36.87°</strong> is mathematically all we need to solve the mountain!
+            </p>
+          </article>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- Full-Width Interactive Mountain Sandbox Section -->
+    <section class="sandbox-section" id="sandbox">
+      <div class="sandbox-header">
+        <span class="story-chapter-eyebrow">Interactive Geometry Lab</span>
+        <h2 class="sandbox-title">The Mountain Sandbox</h2>
+        <p class="sandbox-subtitle">
+          Directly manipulate the geometry. Drag the mountain peak up and down, move the rover along the Martian ground, or scrub the angle to see the math calculate live.
+        </p>
+      </div>
+
+      <div class="sandbox-canvas-wrapper">
+        <div class="story-visual-hud">
+          <span class="story-visual-hud-tag">
+            <span style="color:#2997ff;">⚡</span> Live Geometry Solver
+          </span>
+          <div id="sbFormulaEquation" style="font-family:var(--font-mono); font-size:0.8rem; color:#f5f5f7;">
+            Height = Distance × tan(θ) = 24.0 km × tan(36.9°) = <strong>18.0 km</strong>
+          </div>
+        </div>
+
+        <svg id="sbInteractiveSvg" viewBox="0 0 760 420" style="width:100%; height:100%; display:block; user-select:none;">
+          <defs>
+            <linearGradient id="sbMarsSky" x1="0%" y1="0%" x2="0%" y2="100%">
+              <stop offset="0%" stop-color="#050810"/>
+              <stop offset="60%" stop-color="#121828"/>
+              <stop offset="100%" stop-color="#2c140e"/>
+            </linearGradient>
+            <linearGradient id="sbMtnGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+              <stop offset="0%" stop-color="#e05a36"/>
+              <stop offset="65%" stop-color="#ab3f22"/>
+              <stop offset="100%" stop-color="#6b2310"/>
+            </linearGradient>
+          </defs>
+
+          <rect x="0" y="0" width="760" height="420" fill="url(#sbMarsSky)"/>
+
+          <pattern id="sbGrid" width="20" height="20" patternUnits="userSpaceOnUse">
+            <path d="M 20 0 L 0 0 0 20" fill="none" stroke="rgba(255,255,255,0.05)" stroke-width="1"/>
+          </pattern>
+          <rect x="0" y="0" width="760" height="420" fill="url(#sbGrid)"/>
+
+          <polygon id="sbMountainPoly" points="570,187 720,340 198,340" fill="url(#sbMtnGrad)" stroke="#e05a36" stroke-width="1.5"/>
+
+          <rect x="0" y="340" width="760" height="80" fill="#141824"/>
+          <line x1="0" y1="340" x2="760" y2="340" stroke="rgba(255,255,255,0.18)" stroke-width="1.5"/>
+
+          <rect x="548" y="318" width="22" height="22" fill="none" stroke="#64d2ff" stroke-width="2"/>
+          <circle cx="559" cy="329" r="2.5" fill="#64d2ff"/>
+
+          <line id="sbGroundLine" x1="218" y1="365" x2="570" y2="365" stroke="#30d158" stroke-width="3"/>
+          <line x1="218" y1="357" x2="218" y2="373" stroke="#30d158" stroke-width="2"/>
+          <line x1="570" y1="357" x2="570" y2="373" stroke="#30d158" stroke-width="2"/>
+          <text id="sbGroundText" x="394" y="388" text-anchor="middle" fill="#30d158" font-size="12" font-weight="700" font-family="monospace">Distance = 24.0 km</text>
+
+          <line id="sbHeightLine" x1="570" y1="187" x2="570" y2="340" stroke="#e05a36" stroke-width="3" stroke-dasharray="6 4"/>
+          <text id="sbHeightText" x="590" y="264" fill="#ff6b4a" font-size="12" font-weight="700" font-family="monospace">Height = 18.0 km</text>
+
+          <line id="sbLaserLine" class="animated-laser-beam" x1="226" y1="318" x2="570" y2="187" stroke="#2997ff" stroke-width="3.5"/>
+
+          <circle id="sbSummitPoint" cx="570" cy="187" r="7" fill="#2997ff" stroke="#ffffff" stroke-width="2"/>
+          <circle id="sbSummitHandle" class="interactive-handle" cx="570" cy="187" r="22" fill="rgba(41,151,255,0.2)" stroke="#2997ff" stroke-width="1.5" stroke-dasharray="3 3"/>
+
+          <g id="sbRoverGroup" class="interactive-handle" transform="translate(198, 304)">
+            <rect x="0" y="24" width="12" height="14" fill="#334155" rx="2"/>
+            <rect x="16" y="24" width="12" height="14" fill="#334155" rx="2"/>
+            <rect x="32" y="24" width="12" height="14" fill="#334155" rx="2"/>
+            <rect x="4" y="10" width="40" height="20" fill="#f5f5f7" stroke="#cbd5e1" stroke-width="1.5" rx="3"/>
+            <circle cx="22" cy="19" r="6" fill="#0284c7"/>
+            <circle cx="22" cy="19" r="3" fill="#64d2ff"/>
+            <line x1="34" y1="10" x2="38" y2="0" stroke="#94a3b8" stroke-width="2"/>
+            <circle cx="38" cy="0" r="4" fill="#2997ff"/>
+          </g>
+        </svg>
+      </div>
+
+      <div class="sandbox-controls-bar">
+        <div class="sandbox-slider-group">
+          <span class="sandbox-slider-label">Rover Angle (θ):</span>
+          <input type="range" class="sandbox-range-input" id="sandboxAngleSlider" min="15" max="62" step="0.5" value="36.9" oninput="onSandboxSliderInput(this.value)">
+          <span class="sandbox-angle-readout" id="sandboxAngleReadout">θ = 36.9°</span>
+        </div>
+
+        <div class="sandbox-presets">
+          <button class="sandbox-preset-btn" onclick="setSandboxPreset(20, this)">1. Gentle Slope (20°)</button>
+          <button class="sandbox-preset-btn active" onclick="setSandboxPreset(36.9, this)">2. Mars Target (37°)</button>
+          <button class="sandbox-preset-btn" onclick="setSandboxPreset(55, this)">3. Steep Cliff (55°)</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- Editorial Learning Grid: Model Builder & Final Challenge -->
+    <section class="editorial-grid">
+
+      <!-- Card 1: Tactile Model Builder -->
+      <div class="editorial-card" id="model-builder">
+        <div>
+          <span class="editorial-card-eyebrow">Stage 03 · Tactile Model</span>
+          <h3 class="editorial-card-title">Build the Triangle</h3>
+          <p class="editorial-card-desc">
+            Test your mental model through tactile placement. Match the three labels to their corresponding sides on the geometric diagram.
+          </p>
+
+          <svg viewBox="0 0 460 240" style="width:100%; height:200px; background:#0d1017; border:1px solid rgba(255,255,255,0.08); margin-bottom:18px;">
+            <line x1="60" y1="190" x2="360" y2="190" stroke="#334155" stroke-width="3"/>
+            <line x1="360" y1="190" x2="360" y2="50" stroke="#334155" stroke-width="3"/>
+            <line x1="60" y1="190" x2="360" y2="50" stroke="#334155" stroke-width="3"/>
+
+            <rect x="342" y="172" width="18" height="18" fill="none" stroke="#64d2ff" stroke-width="1.5"/>
+
+            <g id="slot-slant" onclick="handleTactileSlotClick('slot-slant')" style="cursor:pointer;">
+              <rect id="slot-slant-box" x="140" y="90" width="130" height="30" rx="4" fill="rgba(20,24,36,0.9)" stroke="#2997ff" stroke-width="1.5" stroke-dasharray="4 3"/>
+              <text id="slot-slant-text" x="205" y="110" text-anchor="middle" fill="#64d2ff" font-size="10" font-weight="700" font-family="monospace">[ Drop SLANT here ]</text>
+            </g>
+
+            <g id="slot-base" onclick="handleTactileSlotClick('slot-base')" style="cursor:pointer;">
+              <rect id="slot-base-box" x="160" y="176" width="110" height="28" rx="4" fill="rgba(20,24,36,0.9)" stroke="#30d158" stroke-width="1.5" stroke-dasharray="4 3"/>
+              <text id="slot-base-text" x="215" y="194" text-anchor="middle" fill="#30d158" font-size="10" font-weight="700" font-family="monospace">[ Drop BASE here ]</text>
+            </g>
+
+            <g id="slot-height" onclick="handleTactileSlotClick('slot-height')" style="cursor:pointer;">
+              <rect id="slot-height-box" x="372" y="105" width="80" height="30" rx="4" fill="rgba(20,24,36,0.9)" stroke="#e05a36" stroke-width="1.5" stroke-dasharray="4 3"/>
+              <text id="slot-height-text" x="412" y="124" text-anchor="middle" fill="#ff6b4a" font-size="10" font-weight="700" font-family="monospace">[ HEIGHT ]</text>
+            </g>
+          </svg>
+
+          <div id="tactileSuccessBanner" style="display:none; color:#30d158; font-size:0.86rem; font-weight:700; margin-bottom:12px; font-family:monospace;">
+            ✓ All three sides verified! Geometric model complete.
+          </div>
+        </div>
+
+        <div class="tactile-palette">
+          <button class="tactile-badge" id="badge-slant-side" onclick="selectTactileBadge('SLANT SIDE', this)">:: SLANT SIDE</button>
+          <button class="tactile-badge" id="badge-base" onclick="selectTactileBadge('BASE', this)">:: BASE</button>
+          <button class="tactile-badge" id="badge-height" onclick="selectTactileBadge('HEIGHT', this)">:: HEIGHT</button>
+        </div>
+      </div>
+
+      <!-- Card 2: Final Mission Solve -->
+      <div class="editorial-card" id="mission-solve">
+        <div>
+          <span class="editorial-card-eyebrow">Stage 05 · Final Challenge</span>
+          <h3 class="editorial-card-title">Save the Mars Mission</h3>
+          <p class="editorial-card-desc">
+            NASA Mission Control needs the final summit elevation for Mount Elysium. Use your rangefinder telemetry: <strong>Distance = 24.0 km</strong> and <strong>Angle = 36.87°</strong>.
+          </p>
+
+          <div class="mission-terminal">
+            <input type="text" class="terminal-input" id="finalMissionInput" placeholder="e.g. 18 km" onkeydown="if(event.key==='Enter') verifyFinalMission()">
+            <button class="btn-apple-primary" onclick="verifyFinalMission()">Verify Elevation 🚀</button>
+            <button class="btn-apple-secondary" onclick="toggleFinalHint()">💡 Formula</button>
+          </div>
+
+          <div id="finalMissionHint" style="display:none; font-family:var(--font-mono); font-size:0.82rem; color:var(--color-accent-amber); margin-top:14px; line-height:1.5;">
+            Formula: Height = 24 km × tan(36.87°). Since tan(36.87°) ≈ 0.75, calculate: 24 × 0.75 = <strong>18 km</strong>!
+          </div>
+
+          <div id="missionErrorMsg" style="display:none; font-family:var(--font-mono); font-size:0.84rem; color:#ff6b4a; margin-top:14px;"></div>
+
+          <div class="mission-success-banner" id="missionSuccessBanner">
+            <div class="mission-success-title">🏆 Mission Accomplished</div>
+            <p class="mission-success-text">
+              <strong>Height = 18 km (18,000 meters tall).</strong><br>
+              Summit elevation transmitted to NASA orbital relay. Planetary terrain mapped with complete geometric precision.
+            </p>
+          </div>
+        </div>
+
+        <div style="margin-top:20px; font-size:0.75rem; color:var(--color-text-tertiary); font-family:var(--font-mono);">
+          NASA Space Apps Challenge 2026 // Autonomous Mars Navigation
+        </div>
+      </div>
+
+    </section>
+
+    <!-- Editorial Footer -->
+    <footer class="apple-footer">
+      <div style="font-weight:700; color:var(--color-text-primary); letter-spacing:-0.01em;">
+        Base8 // NASA Space Apps Challenge 2026
+      </div>
+      <p style="max-width:540px; line-height:1.5;">
+        An interactive exploration into right-angled trigonometry and real-world planetary geometry for young scientists.
+      </p>
+      <ul class="apple-footer-nav">
+        <li><a href="#dilemma" class="apple-footer-link">Recon</a></li>
+        <li><a href="#abstraction" class="apple-footer-link">The Anchor</a></li>
+        <li><a href="#sandbox" class="apple-footer-link">Interactive Sandbox</a></li>
+        <li><a href="#mission-solve" class="apple-footer-link">Mission Report</a></li>
+      </ul>
+    </footer>
+
+  </div>
+
+  <script src="script.js"></script>
+  <script src="apple-experience.js"></script>
+</body>
+</html>
